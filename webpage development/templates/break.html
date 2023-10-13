@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Break time</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      #Italy {
+        background-image: url("https://images.unsplash.com/photo-1592809622119-c95999139ac6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80");
+      }
+      #Switzerland {
+        background-image: url("https://images.unsplash.com/photo-1527668752968-14dc70a27c95?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+      }
+      #France {
+        background-image: url("https://images.unsplash.com/photo-1573487814950-ced581798eac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80");
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      p {
+        margin: 0;
+        padding: 0;
+      }
+
+      .card_component {
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+        position: relative;
+        opacity: 0;
+        background-size: cover;
+      }
+
+      .card {
+        width: 20vw;
+        heigh: 1vh;
+        border-radius: 2vmin;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-size: cover;
+        transition: all ease-in-out 1s;
+      }
+      .card > p {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #fff;
+        text-shadow: 2px 2px 5px #000;
+        opacity: 0;
+        margin-left: 10%;
+        transition: all ease-in-out 1s;
+      }
+      .card_header {
+        font-size: 48px;
+        font-weight: bolder;
+        margin-left: 10%;
+        margin-top: 50%;
+      }
+      .card_place {
+        font-size: 32px;
+        font-weight: bold;
+        padding: 2.5% 0;
+      }
+
+      .card_comment {
+        font-size: 24px;
+        border-top: 1px solid #fff;
+        padding: 5% 0;
+        margin-right: 20%;
+      }
+
+      .card_component:hover .card_previous {
+        transform: translate(-155%, -50%) rotateZ(-3deg);
+      }
+      .card_component:hover .card_next {
+        transform: translate(55%, -50%) rotateZ(3deg);
+      }
+      .card_component:hover .card_current {
+        transform: translate(-50%, -50%) scale(1.1, 1.1);
+      }
+      .card_component:hover > .slide_button {
+        opacity: 1;
+      }
+
+      .card_current > p {
+        opacity: 1;
+      }
+      .card_current {
+        z-index: 3;
+      }
+      .card_previous,
+      .card_next {
+        z-index: 1;
+      }
+
+      .slide_button {
+        background-color: transparent;
+        border: 0px;
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        filter: drop-shadow(0px 0px 5px #000);
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        opacity: 0;
+        transition: all ease-in-out 1s;
+      }
+      #button_left {
+        left: 5%;
+      }
+      #button_right {
+        left: 95%;
+      }
+
+      @media (max-width: 768px) {
+        .card {
+          width: 50vw;
+        }
+        .card_header {
+          font-size: 24px;
+        }
+        .card_place {
+          font-size: 16px;
+        }
+        .card_comment {
+          font-size: 12px;
+        }
+      }
+      .timer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .timer-label {
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: aliceblue;
+      }
+
+      .timer-display {
+        text-transform: uppercase;
+        background-image: linear-gradient(
+          -225deg,
+          #231557 0%,
+          #44107a 29%,
+          #ff1361 67%,
+          #fff800 100%
+        );
+        background-size: auto auto;
+        background-clip: border-box;
+        background-size: 100% auto;
+        color: #fff;
+        background-clip: text;
+        text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textclip 2s linear infinite;
+        display: inline-block;
+        font-size: 60px;
+      }
+
+      @keyframes textclip {
+        to {
+          background-position: 200% center;
+        }
+      }
+    </style>
+    <script>
+      let card_current;
+      let card_previous;
+      let card_next;
+      let card_component;
+
+      addEventListener("DOMContentLoaded", () => {
+        // Select element after DOM loaded
+        card_current = document.querySelector(".card_current");
+        card_previous = document.querySelector(".card_previous");
+        card_next = document.querySelector(".card_next");
+        card_component = document.querySelector(".card_component");
+
+        // Assign background Image of Current Card to the background
+        card_component.style.backgroundImage =
+          "linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))," +
+          window.getComputedStyle(card_current).backgroundImage;
+
+        //Opacity 0 pre load guaranties clear looking load
+        card_component.style.opacity = 1;
+      });
+
+      // Swap cards to the left
+
+      function on_button_left_click() {
+        card_current.classList.add("card_previous");
+        card_current.classList.remove("card_current");
+        card_previous.classList.add("card_next");
+        card_previous.classList.remove("card_previous");
+        card_next.classList.add("card_current");
+        card_next.classList.remove("card_next");
+
+        [card_current, card_previous, card_next] = [
+          card_next,
+          card_current,
+          card_previous,
+        ];
+
+        // Assign background Image of Current Card to the background
+        card_component.style.backgroundImage =
+          "linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))," +
+          window.getComputedStyle(card_current).backgroundImage;
+      }
+
+      // Swap cards to the right
+
+      function on_button_right_click() {
+        card_current.classList.add("card_next");
+        card_current.classList.remove("card_current");
+        card_previous.classList.add("card_current");
+        card_previous.classList.remove("card_previous");
+        card_next.classList.add("card_previous");
+        card_next.classList.remove("card_next");
+
+        [card_current, card_previous, card_next] = [
+          card_previous,
+          card_next,
+          card_current,
+        ];
+
+        // Assign background Image of Current Card to the background
+        card_component.style.backgroundImage =
+          "linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))," +
+          window.getComputedStyle(card_current).backgroundImage;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="card_component">
+      <div class="timer">
+        <div class="timer-label">Time Remaining</div>
+        <div class="timer-display">15:00</div>
+        <script>
+          // Get the timer display element
+          const timerDisplay = document.querySelector(".timer-display");
+
+          // Set the timer duration (in seconds)
+          let timeLeft = 900;
+
+          // Update the timer display every second
+          const timer = setInterval(() => {
+            // Convert the remaining time to minutes and seconds
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            // Update the timer display with the remaining time
+            timerDisplay.textContent = `${minutes
+              .toString()
+              .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+            // Decrement the remaining time
+            timeLeft--;
+
+            // Check if the timer has run out
+            if (timeLeft < 0) {
+              clearInterval(timer);
+              window.location.href = '/prediction_html';
+            }
+          }, 1000);
+        </script>
+      </div>
+      <div class="card_wrapper">
+        <div class="card card_previous" id="Italy">
+          <p class="card_header">Visit Alps</p>
+          <p class="card_place">Italy</p>
+          <p class="card_comment">Be astonished!</p>
+        </div>
+        <div class="card card_next" id="France">
+          <p class="card_header">Visit Alps</p>
+          <p class="card_place">France</p>
+          <p class="card_comment">Bonjour! Ca va?</p>
+        </div>
+        <div class="card card_current" id="Switzerland">
+          <p class="card_header">Visit Alps</p>
+          <p class="card_place">Switzerland</p>
+          <p class="card_comment">Fall on love</p>
+        </div>
+      </div>
+      <button
+        class="slide_button"
+        id="button_left"
+        onclick="on_button_left_click()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="70"
+          height="70"
+          fill="currentColor"
+          class="bi bi-chevron-left"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+          />
+        </svg>
+      </button>
+      <button
+        class="slide_button"
+        id="button_right"
+        onclick="on_button_right_click()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="70"
+          height="70"
+          fill="currentColor"
+          class="bi bi-chevron-right"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </button>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Spotify Player</title>
+  </head>
+  <body>
+    <div id="spotify-player"></div>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        const token = '<YOUR_SPOTIFY_ACCESS_TOKEN>'; // Replace with your own access token
+        const player = new Spotify.Player({
+          name: 'My Spotify Player',
+          getOAuthToken: cb => { cb(token); },
+          volume: 0.5
+        });
+        player.addListener('ready', ({ device_id }) => {
+          console.log('Ready with Device ID', device_id);
+        });
+        player.addListener('player_state_changed', state => {
+          console.log('Player State Changed', state);
+        });
+        player.addListener('not_ready', ({ device_id }) => {
+          console.log('Device ID has gone offline', device_id);
+        });
+        player.connect();
+      };
+      setTimeout(function() {
+        document.getElementById('spotify-player').innerHTML = '';
+        window.location.href = '/video_feed';
+      }, 900000); // 15 minutes
+    </script>
+  </body>
+</html>

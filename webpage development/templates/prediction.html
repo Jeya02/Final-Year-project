@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PREDICTION</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: gray;
+      padding-bottom: 40px;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto; /* Center the DIV horizontally */
+    }
+    .fixed-footer {
+      width: 100%;
+      position: fixed;
+      color: #fff;
+    }
+    header {
+
+      background-image: url("{{ url_for('static', filename='002.jpg') }}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 260px; /* adjust the height as needed */
+    }
+    .fixed-footer {
+      bottom: 0;
+      text-align: center;
+      background-color:black
+    }
+    .txt {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 18px;
+      color: aliceblue;
+      text-align: center;
+    }
+    .vdo {
+      position: relative;
+      left: 350px;
+      top: 20px;
+    }
+      /*.btn1 {
+        position: relative;
+        left: 600px;
+        padding-top: 30px;
+        padding-bottom: 20px;
+
+      }*/
+      .btn1{
+        align-items: center;
+        padding-top: 30px;
+        padding-bottom: 20px;
+      }
+      .btn2 {
+        align-items: center;
+        appearance: none;
+        background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+        border: 0;
+        border-radius: 6px;
+        box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: "JetBrains Mono",monospace;
+        height: 48px;
+        justify-content: center;
+        line-height: 1;
+        list-style: none;
+        overflow: hidden;
+        padding-left: 16px;
+        padding-right: 16px;
+        position: relative;
+        left: 590px;
+        text-align: left;
+        text-decoration: none;
+        transition: box-shadow .15s,transform .15s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        white-space: nowrap;
+        will-change: box-shadow,transform;
+        font-size: 18px;
+      }
+
+      .btn2:focus {
+        box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+      }
+
+      .btn2:hover {
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+        transform: translateY(-2px);
+      }
+
+      .btn2:active {
+        box-shadow: #3c4fe0 0 3px 7px inset;
+        transform: translateY(2px);
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <p class="txt">
+      Stress affects both the mind and the body. A little bit of stress is
+      good and can help us perform daily activities. Too much stress can cause
+      physical and mental health problems. Learning how to cope with stress
+      can help us feel less overwhelmed and support our mental and physical
+      well-being. There are countless techniques for managing stress. Yoga,
+      mindfulness meditation, and exercise are just a few examples of
+      stress-relieving activities that work wonders. But in the heat of the
+      moment, during a high-pressured job interview, for example, or a
+      disagreement with your spouse, you can't just excuse yourself to
+      meditate or take a long walk. In these situations, you need something
+      more immediate and accessible.
+    </p>
+    <div class="video_set">
+      <img class="vdo" src="{{ url_for('video_feed') }}" width="640" height="480"/>
+      <!--<form method="post" action="/predict" enctype="multipart/form-data"></form>-->
+    </div>
+    <div class="btn1">
+      <a href="{{ url_for('relief') }}"><button class="btn2">RELIEF HERE!!!</button><a>
+      </div>
+      <div class="fixed-footer">
+        <div class="container">Copyright &copy; 2023 Stress Relief<div class="row">Logged in : <strong>{{session.name}}</strong> | <a href="{{ url_for('logout') }}"> Logout</a></div></div>
+      </div>
+    </body>
+    </html>

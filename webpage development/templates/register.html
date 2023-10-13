@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Register Here!!</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Abel", sans-serif;
+    }
+
+    section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(-30deg, #00bfa6 0%, #00bfa6 50%, #333 50%);
+      /*filter: hue-rotate(120deg);*/
+      animation: animate 10s linear infinite;
+    }
+
+    @keyframes animate {
+      0% {
+        filter: hue-rotate(0deg);
+      }
+
+      100% {
+        filter: hue-rotate(360deg);
+      }
+    }
+
+    .box {
+      position: relative;
+      padding: 50px;
+      width: 360px;
+      height: 480px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .box::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-radius: 5px;
+      pointer-events: none;
+      background: linear-gradient(to bottom,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0.1) 15%,
+          transparent 50%,
+          transparent 85%,
+          rgba(255, 255, 255, 0.3) 100%);
+    }
+
+    .box .form {
+      position: relative;
+      width: 100%;
+    }
+
+    .box .form h2 {
+      color: #f2f2f2;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+    }
+
+    .box .form .inputbx {
+      position: relative;
+      width: 320px;
+      margin-bottom: 20px;
+    }
+
+    .box .form .inputbx input {
+      width: 100%;
+      outline: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: transparent;
+      padding: 8px 10px;
+      padding-left: 35px;
+      border-radius: 6px;
+      color: #f2f2f2;
+      font-size: 16px;
+      font-weight: 300;
+      box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .box .form .inputbx input::placeholder {
+      color: #f2f2f2;
+    }
+
+    .box .form .inputbx input[type="submit"] {
+      background: #f2f2f2;
+      color: #111;
+      max-width: 200px;
+      padding: 10px 10px;
+      box-shadow: none;
+      font-weight: 545;
+      letter-spacing: 2px;
+      cursor: pointer;
+      position: absolute;
+      left: 75px;
+    }
+
+    .box .form .inputbx i {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      transform: scale(0.9);
+      filter: invert(1);
+    }
+
+    .remember {
+      position: relative;
+      display: inline-block;
+      color: #f2f2f2;
+      font-weight: 300;
+      margin-bottom: 30px;
+      cursor: pointer;
+    }
+
+    .box .form .btn {
+      position: relative;
+      color: #111;
+      font-weight: 545;
+      font-size: 15px;
+      margin-top: 50px;
+      margin-left: 80px;
+      background: #f2f2f2;
+      max-width: 200px;
+      padding: 10px 14px;
+      box-shadow: none;
+      letter-spacing: 2px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .box .form p {
+      color: #f2f2f2;
+      font-weight: 300;
+      font-size: 15px;
+      margin-top: 5px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+</head>
+
+<body>
+  <section>
+    <div class="box">
+      <div class="form card-front">
+        <h2>Register</h2>
+        <form action="{{ url_for('register') }}" method="post">
+          <div class="inputbx">
+            <input type="text" id="name" name="name" placeholder="Full Name" required name="name" />
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="inputbx">
+            <input type="text" id="email" name="email" placeholder="Email" required name="email" />
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="inputbx">
+            <input type="password" id="password" name="password" placeholder="Password" required name="password" />
+            <i class="fas fa-lock"></i>
+          </div>
+          <label class="remember">
+            <input type="checkbox" /> Remember Me
+          </label>
+          <div class="inputbx">
+            <input type="submit" value="Sign Up" />
+          </div>
+          <a href="{{url_for('login')}}"><button type="button" class="btn">Already Have Account?</button></a>
+          <div>
+            {% if message is defined and message %}
+            <div class="invalid-feedback">{{ message }}</div>
+            {% endif %}
+          </div>
+      </div>
+      </form>
+    </div>
+  </section>
+</body>
+
+</html>
